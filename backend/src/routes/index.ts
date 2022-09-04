@@ -6,12 +6,14 @@ import { authenticationMiddleware } from '../middlewares/authenticationMiddlewar
 import LoginAuthenticationController from "../controllers/Authetication/LoginAuthenticationController";
 import RegisterAuthenticationController from '../controllers/Authetication/RegisterAuthenticationController';
 import MainDashboardController from '../controllers/Dashboard/MainDashboardController';
+import LoginForQrCodeAuthenticationController from '../controllers/Authetication/LoginForQrCodeAuthenticationController';
 
 
 const loginAuthenticationController = new LoginAuthenticationController();
 const registerAuthenticationController = new RegisterAuthenticationController();
 
 const mainDashboardController = new MainDashboardController();
+const loginForQrCodeAuthenticationController = new LoginForQrCodeAuthenticationController();
 
 export function routes (app: Express) {
 
@@ -21,4 +23,5 @@ export function routes (app: Express) {
     app.post('/register', registerAuthenticationController.exec);
 
     app.get('/dashboard', authenticationMiddleware, mainDashboardController.exec);
+    app.post('/login-qr-code', authenticationMiddleware, loginForQrCodeAuthenticationController.exec);
 }
