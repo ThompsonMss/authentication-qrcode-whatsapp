@@ -1,0 +1,62 @@
+version: "3"
+
+services:
+  mongowpp:
+    container_name: mongo-auth
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: admin
+      MONGO_INITDB_DATABASE: authwhatsapp
+    volumes:
+      - ./backend/db:/data/db
+    ports:
+      - 27018:27017
+    networks:
+      - auth-whatsapp
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express-auth
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: admin
+      ME_CONFIG_MONGODB_URL: mongodb://root:admin@mongowpp:27018/
+    networks:
+      - auth-whatsapp
+    depends_on:
+      - mongowpp
+
+  backend_auth:
+    build: ./backend
+    container_name: backend-auth
+    ports:
+      - 4000:4000
+    volumes:
+      - ./backend:/usr/src/app
+    tty: true
+    command: npm start
+    networks:
+      - auth-whatsapp
+    depends_on:
+      - mongowpp
+
+  web-auth:
+    build: ./web-whatsapp
+    container_name: web-auth
+    ports:
+      - 5173:5173
+    volumes:
+      - ./web-whatsapp/:/usr/src/app
+    tty: true
+    command: npm run dev
+    networks:
+      - auth-whatsapp
+
+networks:
+  auth-whatsapp:
+    driver: bridge

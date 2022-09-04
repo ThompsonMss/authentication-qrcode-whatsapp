@@ -1,0 +1,4 @@
+ - Cadastro - Com nome, email e senha.
+ - Login
+ - Dashboard
+ - Autenticacao por QrCode
