@@ -7,6 +7,8 @@ import logoWhatsapp from "../../assets/logo-wpp.svg"
 import { useGeneratedQRCode } from "../../hooks/useGeneratedQRCode";
 import { socket } from "../../services/io";
 
+import { useNavigate } from "react-router-dom"
+
 export interface Auth {
     _id: string;
     token: string;
@@ -14,18 +16,33 @@ export interface Auth {
 
 export function AuthQrCode () {
 
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const token = localStorage.getItem(`@devsapp:1.0.0`);
+
+        if (token) {
+            navigate("/home", { replace: true });
+        }
+
+    }, [])
+
     function prepareAuthenticationQRCode (channelCode: string) {
 
         socket.removeAllListeners();
 
+        console.log(`Código do QRCode: ${channelCode}`)
+
         socket.on(`login-qrcode-${channelCode}`, (data: Auth) => {
+            console.log(`Mensagem recuperada: `, data)
             onAuthenticationSuccess(data);
         });
 
     }
 
     function onAuthenticationSuccess (data: Auth) {
-        alert(JSON.stringify(data));
+        localStorage.setItem(`@devsapp:1.0.0`, JSON.stringify(data))
+        navigate("/home", { replace: true });
     }
 
     const { error, dataQRCode } = useGeneratedQRCode();

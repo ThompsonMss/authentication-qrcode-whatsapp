@@ -4,6 +4,7 @@ import { AuthQrCode } from "../pages/AuthQrCode";
 import { Dashboard } from "../pages/Dashboard";
 
 export function Routers () {
+
     return (
         <BrowserRouter>
             <Routes>
