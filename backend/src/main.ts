@@ -2,16 +2,22 @@ import 'dotenv/config'
 
 import express from 'express'
 import cors from 'cors'
-import Connection from './database/connection'
+
+import { connectToDatabase } from "./database/service"
 
 import { routes } from './routes';
-
-Connection.startConn();
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-routes(app);
+connectToDatabase().then(() => {
 
-app.listen(4000, () => console.log('Server started in port 4000'));
+    routes(app);
+    app.listen(4000, () => console.log('Server started in port 4000'));
+
+}).catch((error: Error) => {
+    console.error("Database connection failed", error);
+    process.exit();
+});
+
