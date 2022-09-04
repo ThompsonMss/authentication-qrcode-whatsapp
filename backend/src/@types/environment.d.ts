@@ -5,6 +5,7 @@ declare global {
             DB_NAME: string;
             USERS_COLLECTION_NAME: string;
             HASH_CRYPTO: string;
+            SECRET: string;
             NODE_ENV: 'development' | 'production';
             PORT?: string;
         }
