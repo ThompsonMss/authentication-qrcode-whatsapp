@@ -1,4 +1,6 @@
 import { Router, Express } from 'express'
+import { Server } from "socket.io"
+
 const router = Router();
 
 import { authenticationMiddleware } from '../middlewares/authenticationMiddleware';
@@ -15,7 +17,7 @@ const registerAuthenticationController = new RegisterAuthenticationController();
 const mainDashboardController = new MainDashboardController();
 const loginForQrCodeAuthenticationController = new LoginForQrCodeAuthenticationController();
 
-export function routes (app: Express) {
+export function routes (app: Express, io: Server) {
 
     app.get('/', (_, res) => res.send('Server is running!'));
 
@@ -23,5 +25,5 @@ export function routes (app: Express) {
     app.post('/register', registerAuthenticationController.exec);
 
     app.get('/dashboard', authenticationMiddleware, mainDashboardController.exec);
-    app.post('/login-qr-code', authenticationMiddleware, loginForQrCodeAuthenticationController.exec);
+    app.post('/login-qr-code', authenticationMiddleware, (req, res) => loginForQrCodeAuthenticationController.exec(req, res, io));
 }

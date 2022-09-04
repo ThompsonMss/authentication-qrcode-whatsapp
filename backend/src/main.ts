@@ -25,7 +25,7 @@ connectToDatabase().then(() => {
         console.log('a user connected');
     });
 
-    routes(app);
+    routes(app, io);
     server.listen(4000, () => console.log('Server started in port 4000'));
 
 }).catch((error: Error) => {
