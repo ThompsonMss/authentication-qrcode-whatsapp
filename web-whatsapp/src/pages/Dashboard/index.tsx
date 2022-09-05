@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Load } from "../../components/Load";
 import { API, User } from "../../services/api";
 import { Auth } from "../AuthQrCode";
 
-import { Container } from "./styles";
+import { Container, ContainerLoad } from "./styles";
 
 export function Dashboard () {
 
@@ -34,13 +35,38 @@ export function Dashboard () {
         } catch (error: any) {
             toast.error(`${error.message}`);
         } finally {
-            setLoading(false);
+            setTimeout(() => setLoading(false), 2000)
         }
+    }
+
+    function logout () {
+        localStorage.setItem(`@devsapp:1.0.0`, '');
+        navigate("/", { replace: true });
+    }
+
+    if (loading) {
+        return (
+            <ContainerLoad>
+                <Load />
+            </ContainerLoad>
+        )
     }
 
     return (
         <Container>
-            <h1>{user ? user?.user.name : 'nada'}</h1>
+            <header>
+                <h1>Bem vindo(a), <b>{user?.user.name}</b></h1>
+            </header>
+
+            <main>
+
+                <p>Seu ID: {user?.user._id}</p>
+
+                <button onClick={logout}>
+                    <span>Sair</span>
+                </button>
+
+            </main>
         </Container>
     );
 }
