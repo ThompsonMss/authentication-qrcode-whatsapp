@@ -49,7 +49,7 @@ services:
     build: ./web-whatsapp
     container_name: web-auth
     ports:
-      - 5174:5173
+      - 5173:5173
     volumes:
       - ./web-whatsapp/:/usr/src/app
     tty: true
