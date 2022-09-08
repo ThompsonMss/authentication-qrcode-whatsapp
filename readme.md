@@ -19,7 +19,7 @@ Este é um projeto com o intuito de "clonar" o fluxo de autenticação do Whatsa
 
 ## Fluxograma
 
-![fluxo](https://user-images.githubusercontent.com/30129295/189148474-edd9e324-ce3f-472c-abcd-05ff545bac72.jpg)
+![fluxo](https://user-images.githubusercontent.com/30129295/189155032-06894151-33b2-4bdb-84e9-62504d19efcf.png)
 
 <br />
 
