@@ -85,7 +85,7 @@ npx expo start --android # ou --ios
 <br />
 
 ### Pronto! Abra em seu navegador o link abaixo para ter certeza que o serviço está online.
-[Link WEB - http://localhost:3005](http://localhost:5173/)
+[Link WEB - http://localhost:5173](http://localhost:5173/)
 
 <br />
  
